@@ -1,0 +1,49 @@
+---
+title: Course Hub
+description: A personal study planner. It reads course outlines, keeps the facts that matter, and books study blocks on your calendar.
+template: splash
+hero:
+  tagline: A personal study planner. It reads your course outlines, keeps the weights and dates it can prove, and books study blocks on your calendar every morning.
+  actions:
+    - text: What Course Hub is
+      link: /course-hub-docs/start-here/overview/
+      icon: right-arrow
+    - text: Fix something now
+      link: /course-hub-docs/operations/
+      icon: warning
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Course Hub has two parts. The **backend** runs n8n, local AI and the databases on one Mac. The **web app** is a small Next.js site on an Oracle Cloud VM that shows the same data to your phone or any browser.
+
+```mermaid
+flowchart LR
+  B[Browser] --> W[Web app<br/>Oracle VM]
+  W -- service token --> N[n8n API<br/>Mac]
+  L[Local site<br/>localhost:8080/hub] --> N
+  N --> G[Google Calendar<br/>and Tasks]
+  N --> O[Ollama<br/>local AI]
+```
+
+## Find what you need
+
+<CardGrid>
+  <Card title="Learn it" icon="open-book">
+    New here? [Plan and wrap up your first day](/course-hub-docs/tutorials/plan-your-first-day/) walks you through the web app in about 10 minutes.
+  </Card>
+  <Card title="Do a task" icon="rocket">
+    [How-to guides](/course-hub-docs/how-to/deploy-the-web-app/) cover deploying, previewing a plan, fixing a fact and changing settings.
+  </Card>
+  <Card title="Look it up" icon="information">
+    [Reference](/course-hub-docs/reference/hub-api/) lists every endpoint, workflow, table, setting, command and dependency.
+  </Card>
+  <Card title="Understand it" icon="puzzle">
+    [Explanation](/course-hub-docs/explanation/architecture/) covers why it's built this way: architecture, ingest rules, the planner and security.
+  </Card>
+</CardGrid>
+
+## When something breaks
+
+<LinkCard title="Runbook index" description="Symptoms first: stale data, a failed deploy, a plan that wrote nothing, an AI scan stuck waiting." href="/course-hub-docs/operations/" />

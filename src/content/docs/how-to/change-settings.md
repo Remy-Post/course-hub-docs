@@ -13,9 +13,7 @@ Use this guide to change how plans are built: wake and sleep times, block length
 
 **Advanced** holds the automation switches: the 6:00 AM plan, a Google Task per assessment, local-AI step lists, and what happens when a conflict question expires.
 
-:::caution[Ranges the backend rejects]
-The web app accepts some values that the Mac rejects. Stay inside the **backend** range in the [Settings reference](/course-hub-docs/reference/settings/). For example, a 45-minute study block is accepted by the form but rejected by n8n, because n8n requires 60–180 minutes.
-:::
+Number fields only accept what the Mac accepts: for example, a study block of 60–180 minutes in steps of 5. See the [Settings reference](/course-hub-docs/reference/settings/) for every range.
 
 ## Settings the web app doesn't show
 

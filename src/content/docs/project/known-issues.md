@@ -18,17 +18,6 @@ These were found by reading the code and checking the live system on 2026-10-31.
 - **Impact:** high. Anyone with the link can change your calendar and settings.
 - **Fix:** put Cloudflare Access (one-time PIN by email) in front of `<web-host>`, or build the IP write lock designed in `docs/write-lock-by-ip.md`. See [Security model](/course-hub-docs/explanation/security-model/).
 
-### Re-scan buttons in the web app always fail
-
-- **Impact:** medium. **Re-scan** on a course page and at the end of Check my facts shows an error, and nothing is scanned.
-- **Cause:** the `rescan` action calls `POST ingest`, but the tunnel's allow-list on `<api-host>` leaves out `ingest` on purpose.
-- **Fix:** either hide the buttons in the web app, or add `ingest` to the allow-list in `stack/tunnel-up.sh` with a server-side rate limit. `ingest` loads a large model, so an exposed endpoint can tie up the Mac.
-
-### Settings ranges differ between the form and n8n
-
-- **Impact:** medium. The form accepts values that n8n rejects, such as a 45-minute study block, and the row then shows an error.
-- **Fix:** copy the backend ranges from `JS_SETTINGS_IN` in `build.py` into `src/features/settings/fields.ts`: `study_default` 60–180, `study_min` 30–120, `study_max` 60–180, `walk_after` 5–60, `lookahead_days` 3–60. See [Settings](/course-hub-docs/reference/settings/).
-
 ### A mixed settings save drops invalid keys silently
 
 - **Impact:** low. The web app saves one key at a time, so it isn't affected. A script that sends several keys gets `200` even if some were rejected.

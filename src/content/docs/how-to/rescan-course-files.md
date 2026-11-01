@@ -7,7 +7,7 @@ Course Hub scans course files every night at 3:30 AM, and within a few seconds w
 
 ## Before you start
 
-- You're on the Mac. The `ingest` endpoint is **not** routed through the public tunnel, so the web app's **Re-scan** buttons don't work. See [Known issues](/course-hub-docs/project/known-issues/).
+- You're on the Mac. The `ingest` endpoint is **not** routed through the public tunnel, because a scan loads a large model. The web app has no Re-scan button: it only says when the next automatic scan runs.
 - Check memory with `n8nctl status`. A full scan loads a model of about 10–15 GB. If memory is tight, the scan waits. See [AI scan is waiting](/course-hub-docs/operations/ai-waiting-for-memory/).
 
 ## Pick the right scan

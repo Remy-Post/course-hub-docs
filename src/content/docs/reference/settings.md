@@ -1,23 +1,23 @@
 ---
 title: Settings
-description: Every ch_settings key, with its default, its meaning, who can edit it and the ranges each side accepts.
+description: Every ch_settings key, with its default, its meaning, who can edit it and the range it accepts.
 ---
 
 Settings live in the `ch_settings` table as string key–value pairs. The setup workflow seeds them once and keeps existing rows.
 
 ## Editable settings
 
-**Backend range** is what `POST settings` accepts (`JS_SETTINGS_IN` in `build.py`). **Web app range** is what the Settings form allows (`src/features/settings/fields.ts`). Where they differ, the backend wins and the save fails.
+**Range** is what `POST settings` accepts (`JS_SETTINGS_IN` in `build.py`). The Settings form uses the same ranges (`src/features/settings/fields.ts`), and `test/settings.test.ts` in the web app fails if they drift apart. **In the web app** says how the form shows the key.
 
-| Key | Default | Meaning | Backend range | Web app range |
+| Key | Default | Meaning | Range | In the web app |
 |---|---|---|---|---|
-| `wake` | `07:00` | First block of a full-day plan | `HH:MM`, 24-hour | Same |
-| `sleep` | `22:15` | When the sleep block starts | `HH:MM` | Same |
-| `study_default` | `90` | Usual study block, in minutes | **60–180**, step 5 | 25–180 ⚠️ |
-| `study_min` | `60` | Shortest study block | **30–120**, step 5 | 15–120 ⚠️ |
-| `study_max` | `180` | Longest continuous study | **60–180**, step 5 | 30–240 ⚠️ |
-| `walk_after` | `30` | Walk after a study block | **5–60**, step 5 | 0–60 ⚠️ |
-| `lookahead_days` | `21` | How far ahead deadlines count | **3–60** | 1–60 ⚠️ |
+| `wake` | `07:00` | First block of a full-day plan | `HH:MM`, 24-hour | Time |
+| `sleep` | `22:15` | When the sleep block starts | `HH:MM` | Time |
+| `study_default` | `90` | Usual study block, in minutes | 60–180, step 5 | Number |
+| `study_min` | `60` | Shortest study block | 30–120, step 5 | Number |
+| `study_max` | `180` | Longest continuous study | 60–180, step 5 | Number |
+| `walk_after` | `30` | Walk after a study block | 5–60, step 5 | Number |
+| `lookahead_days` | `21` | How far ahead deadlines count | 3–60 | Number |
 | `morning_plan_enabled` | `true` | Plan today at 6:00 AM | `"true"` or `"false"` | Switch |
 | `tasks_enabled` | `true` | Keep a Google Task per assessment | `"true"` or `"false"` | Switch |
 | `labels_enabled` | `true` | Local AI writes step lists for blocks | `"true"` or `"false"` | Switch |
@@ -25,8 +25,6 @@ Settings live in the `ch_settings` table as string key–value pairs. The setup 
 | `sms_enabled` | `false` | Text conflict questions with Twilio | `"true"` or `"false"` | Not shown |
 | `sms_to`, `sms_from` | empty | Phone numbers | `+1` and 10 digits, or empty | Not shown |
 | `twilio_account_sid` | empty | Used only by the SMS poll fallback | `AC` and 32 hex characters, or empty | Not shown |
-
-⚠️ marks a range mismatch. See [Known issues](/course-hub-docs/project/known-issues/).
 
 ## Set by setup or by hand
 

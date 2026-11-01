@@ -12,9 +12,9 @@ The web app is a Next.js 16.4 App Router project in `Remy-Post/n8n-hub`. All dat
 | `/` | Today: Now / Next, the at-a-glance tiles, any pending conflict question, and the five flows | `getOverview()` | `decide` |
 | `/plan` | 6-step plan flow | `getOverview()` | `buildPlan`, `decide` |
 | `/wrap-up` | 3-step evening check-in | `getOverview()` | `saveCheckin` |
-| `/facts` | One unconfirmed fact per step, with its source quote | `getOverview()`, `getCourses()` | `saveOverride`, `rescan` |
+| `/facts` | One unconfirmed fact per step, with its source quote | `getOverview()`, `getCourses()` | `saveOverride` |
 | `/courses` | Every course, with its next deadline and total weight | `getCourses()`, `getOverview()` | — |
-| `/courses/[code]` | One course: deadlines by month (filter with `?type=`), people, details, weekly topics | `getCourses()` | `rescan` |
+| `/courses/[code]` | One course: deadlines by month (filter with `?type=`), people, details, weekly topics | `getCourses()` | — |
 | `/settings` | Basic and advanced settings that save as you go | `getSettings()` | `saveSetting` |
 | `/api/health` | `{"ok":true}`, static, with no call to the Mac | — | — |
 | `/robots.txt` | `Disallow: /` | — | — |
@@ -42,8 +42,7 @@ Every write goes through `runWrite()` in `src/lib/actions.ts`, which rate-limits
 | `decide` | `features/plan/actions.ts` | `code` 1–40 characters, `choice` enum | `POST decision` |
 | `saveCheckin` | `features/wrap-up/actions.ts` | blocks 0–30, focus 1–5 | `POST checkin` |
 | `saveOverride` | `features/facts/actions.ts` | course code `^[A-Z]{3,5}-\d{4}$`; `due_at`, `weight` 0–100 or `date_status` | `POST override` |
-| `rescan` | `features/facts/actions.ts` | Optional course code | `POST ingest` (not routed; see [Known issues](/course-hub-docs/project/known-issues/)) |
-| `saveSetting` | `features/settings/actions.ts` | Only keys in `EDITABLE_KEYS`, typed by the field definition | `POST settings` |
+| `saveSetting` | `features/settings/actions.ts` | Only keys in `EDITABLE_KEYS`, typed by the field definition. Numbers must be whole, inside the field's range and a multiple of its step. | `POST settings` |
 
 | Error | Message the user sees |
 |---|---|
